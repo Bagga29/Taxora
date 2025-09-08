@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth Page</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f9fbff;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+
+  <div class="w-full max-w-md bg-white rounded-2xl shadow-md p-8">
+    <h2 class="text-center text-xl font-semibold text-gray-900">Get Started</h2>
+    {% if messages %}
+      <div class="mb-4">
+        {% for message in messages %}
+          <p class="text-sm text-center
+                {% if message.tags == 'success' %} text-green-600
+                {% elif message.tags == 'error' %} text-red-600
+                {% elif message.tags == 'warning' %} text-yellow-600
+                {% else %} text-gray-600 {% endif %}">
+            {{ message }}
+          </p>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <p class="text-center text-gray-500 mb-6">Create your account or login</p>
+
+    <!-- Tabs -->
+    <div class="flex justify-center mt-6">
+      <div class="bg-gray-100 rounded-full p-1 flex w-96">
+        <!-- Login Tab -->
+        <input type="radio" name="auth" id="login" class="hidden peer/login">
+        <label for="login"
+              class="flex-1 text-center py-2 rounded-full cursor-pointer
+                    peer-checked/login:bg-white peer-checked/login:text-black
+                    peer-checked/login:font-semibold transition">
+          Login
+        </label>
+
+        <!-- Signup Tab -->
+        <input type="radio" name="auth" id="signup" class="hidden peer/signup" checked>
+        <label for="signup"
+              class="flex-1 text-center py-2 rounded-full cursor-pointer
+                    peer-checked/signup:bg-white peer-checked/signup:text-black
+                    peer-checked/signup:font-semibold transition">
+          Sign Up
+        </label>
+      </div>
+    </div>
+
+    <!-- Forms Container -->
+    <div class="mt-6">
+
+      <!-- LOGIN FORM -->
+      <div id="login-form" class="hidden">
+        <form method="POST" action="{% url 'login' %}">
+          {% csrf_token %}
+          <label class="block mb-2 text-sm font-medium text-gray-600">Email</label>
+          <div class="relative mb-4">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">📧</span>
+            <input type="email" name="email" placeholder="your@email.com"
+                   class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+
+          <label class="block mb-2 text-sm font-medium text-gray-600">Password</label>
+          <div class="relative mb-6">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔒</span>
+            <input type="password" name="password" placeholder="Enter your password"
+                   class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer">👁</span>
+          </div>
+
+          <button type="submit"
+                  class="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+            Login
+          </button>
+        </form>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="signup-form">
+        <p class="text-sm font-medium text-gray-600 mb-2">I am a:</p>
+
+        <!-- Options -->
+        <div class="space-y-3">
+          <!-- Small Business Owner -->
+          <label class="block">
+            <input type="radio" name="role" value="sme" class="peer hidden" />
+            <div class="flex items-center justify-between border rounded-xl px-4 py-3 cursor-pointer transition
+                        hover:bg-blue-50 peer-checked:border-2 peer-checked:border-blue-700 peer-checked:bg-blue-50">
+              <div class="flex items-center space-x-3">
+                <span class="text-blue-700">🏢</span>
+                <div>
+                  <p class="font-medium text-gray-900">Small Business Owner</p>
+                  <p class="text-sm text-gray-500">Proprietor, Startup Founder, or SME</p>
+                </div>
+              </div>
+              <span class="text-xs font-semibold bg-blue-700 text-white px-2 py-1 rounded-lg">SME</span>
+            </div>
+          </label>
+
+          <!-- Chartered Accountant -->
+          <label class="block">
+            <input type="radio" name="role" value="ca" class="peer hidden" />
+            <div class="flex items-center justify-between border rounded-xl px-4 py-3 cursor-pointer transition
+                        hover:bg-blue-50 peer-checked:border-2 peer-checked:border-blue-700 peer-checked:bg-blue-50">
+              <div class="flex items-center space-x-3">
+                <span class="text-green-700">📊</span>
+                <div>
+                  <p class="font-medium text-gray-900">Chartered Accountant</p>
+                  <p class="text-sm text-gray-500">CA practicing or working with SMEs</p>
+                </div>
+              </div>
+              <span class="text-xs font-semibold bg-green-700 text-white px-2 py-1 rounded-lg">CA</span>
+            </div>
+          </label>
+        </div>
+
+        <!-- Signup Form -->
+        <form method="POST" action="{% url 'signup' %}" class="mt-4">
+          {% csrf_token %}
+          <label class="block mb-2 text-sm font-medium text-gray-600">Email</label>
+          <div class="relative mb-4">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">📧</span>
+            <input type="email" name="email" placeholder="your@email.com"
+                   class="w-full pl-10 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+          </div>
+
+          <label class="block mb-2 text-sm font-medium text-gray-600">Password</label>
+          <div class="relative mb-6">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔒</span>
+            <input type="password" name="password" placeholder="Create a strong password"
+                   class="w-full pl-10 pr-10 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none">
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 cursor-pointer">👁</span>
+          </div>
+
+          <button type="submit"
+                  class="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+            Create Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS toggle -->
+  <script>
+    const loginRadio = document.getElementById("login");
+    const signupRadio = document.getElementById("signup");
+    const loginForm = document.getElementById("login-form");
+    const signupForm = document.getElementById("signup-form");
+
+    function toggleForms() {
+      if (loginRadio.checked) {
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+      } else {
+        signupForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+      }
+    }
+
+    loginRadio.addEventListener("change", toggleForms);
+    signupRadio.addEventListener("change", toggleForms);
+
+    // init
+    toggleForms();
+  </script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SME Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 font-sans">
+
+  <div class="flex h-screen">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md hidden md:flex flex-col">
+      <div class="p-4 flex items-center gap-2">
+        <img src="{% static 'icons/accountai.svg' %}" alt="Logo" class="w-6 h-6">
+        <span class="font-bold text-lg">AccountAI</span>
+      </div>
+      <nav class="flex-1">
+        <ul class="space-y-1 px-2">
+          <li class="bg-blue-50 text-blue-600 rounded-lg p-3 flex items-center gap-2">
+            <i class="fas fa-home"></i> Dashboard
+          </li>
+          <li class="p-3 hover:bg-gray-100 rounded-lg flex items-center gap-2">
+            <i class="fas fa-receipt"></i> Scan Invoice
+          </li>
+          <li class="p-3 hover:bg-gray-100 rounded-lg flex items-center gap-2">
+            <i class="fas fa-exchange-alt"></i> Transactions
+          </li>
+          <li class="p-3 hover:bg-gray-100 rounded-lg flex items-center gap-2">
+            <i class="fas fa-folder"></i> Documents
+          </li>
+          <li class="p-3 hover:bg-gray-100 rounded-lg flex items-center gap-2">
+            <i class="fas fa-robot"></i> AI Tax Advisor
+          </li>
+          <li class="p-3 hover:bg-gray-100 rounded-lg flex items-center gap-2">
+            <i class="fas fa-user-tie"></i> CA Connect
+          </li>
+          <li class="p-3 hover:bg-gray-100 rounded-lg flex items-center gap-2">
+            <i class="fas fa-cog"></i> Settings
+          </li>
+        </ul>
+      </nav>
+      <div class="p-4 border-t">
+        <div class="flex items-center gap-2">
+          <div class="bg-blue-100 text-blue-600 font-bold rounded-full w-8 h-8 flex items-center justify-center">R</div>
+          <div>
+            <p class="text-sm font-medium">Raj Enterprises</p>
+            <p class="text-xs text-gray-500">raj@example.com</p>
+          </div>
+        </div>
+        <a href="{% url 'logout' %}" class="mt-3 flex items-center gap-2 text-sm text-red-600 hover:underline">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 p-6 overflow-y-auto">
+      <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
+
+      <!-- Top widgets -->
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-blue-50 border-2 border-dashed border-blue-300 rounded-xl p-6 flex flex-col items-center justify-center text-blue-600">
+          <i class="fas fa-upload text-3xl mb-2"></i>
+          <p class="font-medium">Upload Invoice/Receipt</p>
+          <p class="text-sm text-gray-500">Drag & drop or click to upload documents</p>
+        </div>
+        <div class="bg-green-50 border-2 border-dashed border-green-300 rounded-xl p-6 flex flex-col items-center justify-center text-green-600">
+          <i class="fas fa-plus text-3xl mb-2"></i>
+          <p class="font-medium">Add Manual Entry</p>
+          <p class="text-sm text-gray-500">Record income or expense manually</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid md:grid-cols-3 gap-4 mt-6">
+        <div class="bg-white shadow rounded-xl p-4">
+          <p class="text-sm text-gray-500">Total Income</p>
+          <p class="text-2xl font-bold text-green-600">₹2,45,000</p>
+          <p class="text-xs text-green-500">+12% from last month</p>
+        </div>
+        <div class="bg-white shadow rounded-xl p-4">
+          <p class="text-sm text-gray-500">Total Expenses</p>
+          <p class="text-2xl font-bold text-red-600">₹1,85,000</p>
+          <p class="text-xs text-red-500">-5% from last month</p>
+        </div>
+        <div class="bg-white shadow rounded-xl p-4">
+          <p class="text-sm text-gray-500">Net Profit</p>
+          <p class="text-2xl font-bold text-blue-600">₹60,000</p>
+          <p class="text-xs text-green-500">+25% from last month</p>
+        </div>
+      </div>
+
+      <!-- Transactions & Insights -->
+      <div class="grid md:grid-cols-2 gap-4 mt-6">
+        <!-- Recent Transactions -->
+        <div class="bg-white shadow rounded-xl p-4">
+          <h2 class="text-lg font-semibold mb-3">Recent Transactions</h2>
+          <ul class="space-y-2 text-sm">
+            <li class="flex justify-between">
+              <span>Office Supplies Co. <span class="text-gray-400">2025-01-30</span></span>
+              <span class="text-red-600">₹3,500</span>
+            </li>
+            <li class="flex justify-between">
+              <span>Client Payment <span class="text-gray-400">2025-01-29</span></span>
+              <span class="text-green-600">₹25,000</span>
+            </li>
+            <li class="flex justify-between">
+              <span>Software License <span class="text-gray-400">2025-01-28</span></span>
+              <span class="text-red-600">₹1,200</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- AI Insights -->
+        <div class="bg-white shadow rounded-xl p-4">
+          <h2 class="text-lg font-semibold mb-3">AI Insights</h2>
+          <div class="space-y-2 text-sm">
+            <div class="bg-blue-50 p-3 rounded-lg">GST Input Credit: Claim ₹12,500 additional credit</div>
+            <div class="bg-green-50 p-3 rounded-lg">Expense Optimization: Supply costs up 30%</div>
+            <div class="bg-orange-50 p-3 rounded-lg">Tax Planning: Invest in ELSS before March 31st</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- FontAwesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</body>
+</html>
